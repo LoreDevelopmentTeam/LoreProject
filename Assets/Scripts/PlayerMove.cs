@@ -13,6 +13,11 @@ public class PlayerMove : MonoBehaviour {
 	}
 
 	void Update () {
+		if(Input.GetKey(KeyCode.Escape))
+		{
+			//probably not the best place to put this...
+			Application.Quit ();
+		}
 		bool left = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
 		bool right = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
 		bool down = Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S);
@@ -43,7 +48,15 @@ public class PlayerMove : MonoBehaviour {
 			moveY = Mathf.Min(moveY + acceleration, 1);
 		}
 	}
+
 	void FixedUpdate(){
 		GetComponent<Rigidbody2D>().velocity = new Vector2 (moveX * speed, moveY * speed);
+	}
+
+	void OnTriggerEnter2D(Collider2D coll) {
+		if (coll.gameObject.tag == "Teleporter")
+		{
+			Application.LoadLevel (coll.gameObject.GetComponent<TeleporterScript> ().scene);
+		}
 	}
 }
