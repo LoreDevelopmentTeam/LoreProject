@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerMove : MonoBehaviour {
 
+	public GameObject artifactBox;
+
 	float speed = 5.0f;
 	float moveX = 0;
 	float moveY = 0;
@@ -54,9 +56,18 @@ public class PlayerMove : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		if (coll.gameObject.tag == "Teleporter")
-		{
+		if (coll.gameObject.tag == "Teleporter") {
 			Application.LoadLevel (coll.gameObject.GetComponent<TeleporterScript> ().scene);
+		} else if (coll.gameObject.tag == "Artifact") {
+			GameObject box = Instantiate (artifactBox);
+			box.transform.Find("img").GetComponent<SpriteRenderer>().sprite = coll.gameObject.GetComponent<ArtifactScript> ().image;
+			box.transform.Find("name").GetComponent<TextMesh>().text = coll.gameObject.GetComponent<ArtifactScript> ().name;
+			box.transform.Find("description").GetComponent<TextMesh>().text = coll.gameObject.GetComponent<ArtifactScript> ().description;
+			if (coll.gameObject.GetComponent<ArtifactScript> ().removeable) {
+				Destroy (coll.gameObject);
+			}
+			//pause the game
+			Time.timeScale = 0;
 		}
 	}
 }
