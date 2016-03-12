@@ -37,7 +37,7 @@ public class IsometricMovement : MonoBehaviour {
 			if (coll.gameObject.GetComponent<ArtifactScript> ().removeable) {
 				Destroy (coll.gameObject);
 			}
-			GameObject manager = GameObject.Find ("GameController");
+			GameObject manager = GameObject.FindWithTag ("GameController");
 			manager.GetComponent<GameController> ().destroyed = true; 
 			manager.GetComponent<GameController> ().destroyedObjects.Add (3);
 

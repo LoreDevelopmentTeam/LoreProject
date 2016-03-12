@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
-	public ArrayList destroyedObjects; 
+	public ArrayList destroyedObjects = new ArrayList(); 
 	public bool destroyed = false;  
 
 	public static GameController instance = null; 

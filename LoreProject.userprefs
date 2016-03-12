@@ -1,8 +1,8 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\screwingaround\bullethelltut\Assets\UniBulletHell\readme.txt">
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\IsometricMovement.cs">
     <Files>
-      <File FileName="..\..\screwingaround\bullethelltut\Assets\UniBulletHell\readme.txt" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\IsometricMovement.cs" Line="40" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
