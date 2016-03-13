@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class IsometricMovement : MonoBehaviour {
@@ -25,7 +26,7 @@ public class IsometricMovement : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Teleporter") {
-			Application.LoadLevel (coll.gameObject.GetComponent<TeleporterScript> ().scene);
+			SceneManager.LoadScene (coll.gameObject.GetComponent<TeleporterScript> ().scene);
 		} else if (coll.gameObject.tag == "Artifact") {
 			//pause the game
 
@@ -36,10 +37,14 @@ public class IsometricMovement : MonoBehaviour {
 			box.transform.Find("description").GetComponent<TextMesh>().text = coll.gameObject.GetComponent<ArtifactScript> ().description;
 			if (coll.gameObject.GetComponent<ArtifactScript> ().removeable) {
 				Destroy (coll.gameObject);
+				GameObject manager = GameObject.FindWithTag ("GameController");
+				//manager.GetComponent<GameController> ().destroyed = true;
+				string name = SceneManager.GetActiveScene ().name;
+				if (!manager.GetComponent<GameController> ().destroyedObjects.ContainsKey (name)) {
+					manager.GetComponent<GameController> ().destroyedObjects.Add (name, new ArrayList ());
+				}
+				manager.GetComponent<GameController> ().destroyedObjects[name].Add (coll.gameObject.name);
 			}
-			GameObject manager = GameObject.FindWithTag ("GameController");
-			manager.GetComponent<GameController> ().destroyed = true; 
-			manager.GetComponent<GameController> ().destroyedObjects.Add (3);
 
 		}
 	}

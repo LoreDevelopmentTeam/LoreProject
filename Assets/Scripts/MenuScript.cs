@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour {
 
@@ -44,7 +45,7 @@ public class MenuScript : MonoBehaviour {
 		if (GameController.instance == null) {
 			Instantiate (gameController); 
 		}
-		Application.LoadLevel (2); 
+		SceneManager.LoadScene ("temple");
 
 	}
 

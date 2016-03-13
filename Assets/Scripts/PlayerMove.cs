@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerMove : MonoBehaviour {
@@ -57,7 +58,7 @@ public class PlayerMove : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Teleporter") {
-			Application.LoadLevel (coll.gameObject.GetComponent<TeleporterScript> ().scene);
+			SceneManager.LoadScene (coll.gameObject.GetComponent<TeleporterScript> ().scene);
 		} else if (coll.gameObject.tag == "Artifact") {
 			GameObject box = Instantiate (artifactBox);
 			box.transform.Find("img").GetComponent<SpriteRenderer>().sprite = coll.gameObject.GetComponent<ArtifactScript> ().image;

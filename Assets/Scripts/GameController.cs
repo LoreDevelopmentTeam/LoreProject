@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
-	public ArrayList destroyedObjects = new ArrayList(); 
+	//public ArrayList destroyedObjects = new ArrayList(); 
+	public Dictionary<string, ArrayList> destroyedObjects = new Dictionary<string, ArrayList>();
 	public bool destroyed = false;  
 
 	public static GameController instance = null; 
@@ -24,10 +27,17 @@ public class GameController : MonoBehaviour {
 
 		//kind of hacky. It would be better if destroyedObjects held strings corresponding to artifacts
 		//but I'll do that later
-		if (level == 3) {
+		/*if (level == 3) {
 			if (destroyedObjects.Contains(3)) {
 				//artifacts will be named differently later I suppose 
 				Destroy (GameObject.Find ("artifact"));
+			}
+		}*/
+		string name = SceneManager.GetActiveScene ().name;
+		if (destroyedObjects.ContainsKey (name)) {
+			ArrayList objectsToRemove = destroyedObjects [name];
+			foreach (object obj in objectsToRemove) {
+				Destroy (GameObject.Find((string)obj));
 			}
 		}
 	}
