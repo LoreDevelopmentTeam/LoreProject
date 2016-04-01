@@ -6,7 +6,7 @@ public class IsometricMovement : MonoBehaviour {
 
 	public GameObject artifactBox;
 
-	float speed = 5.0f;
+	float speed = 2.5f;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +15,11 @@ public class IsometricMovement : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-
+		if(Input.GetKey(KeyCode.Escape))
+		{
+			//probably not the best place to put this...
+			Application.Quit ();
+		}
 		
 		float h = Input.GetAxis ("Horizontal");
 		float v = Input.GetAxis ("Vertical");
