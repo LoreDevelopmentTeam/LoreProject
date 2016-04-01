@@ -24,15 +24,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int level){
-
-		//kind of hacky. It would be better if destroyedObjects held strings corresponding to artifacts
-		//but I'll do that later
-		/*if (level == 3) {
-			if (destroyedObjects.Contains(3)) {
-				//artifacts will be named differently later I suppose 
-				Destroy (GameObject.Find ("artifact"));
-			}
-		}*/
 		string name = SceneManager.GetActiveScene ().name;
 		if (destroyedObjects.ContainsKey (name)) {
 			ArrayList objectsToRemove = destroyedObjects [name];
@@ -52,7 +43,6 @@ public class GameController : MonoBehaviour {
 
 		if(Input.GetKey(KeyCode.Escape))
 		{
-			//probably not the best place to put this...
 			Application.Quit ();
 		}
 	}
