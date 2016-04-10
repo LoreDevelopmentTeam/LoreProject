@@ -40,20 +40,23 @@ public class GameController : MonoBehaviour {
 	}
 	
 	void Update () {
-		foreach(string s in instance.destroyedObjects) {
-			print(s);
-		}
 		if (Input.GetKey (KeyCode.Escape) && !SceneManager.GetActiveScene ().name.Equals("Title")) {
-			if (unpressed) {
-				if (p == null) {
-					Time.timeScale = 0;
-					p = Instantiate (pauseMenu);
-				} else {
-					Destroy (p);
-					Time.timeScale = 1;
+			GameObject artifactBox = GameObject.FindGameObjectWithTag ("ArtifactBox");
+			if (artifactBox != null) {
+				Destroy (artifactBox);
+				Time.timeScale = 1;
+			} else {
+				if (unpressed) {
+					if (p == null) {
+						Time.timeScale = 0;
+						p = Instantiate (pauseMenu);
+					} else {
+						Destroy (p);
+						Time.timeScale = 1;
+					}
 				}
+				unpressed = false;
 			}
-			unpressed = false;
 
 		} else {
 			unpressed = true;

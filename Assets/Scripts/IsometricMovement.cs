@@ -7,7 +7,7 @@ public class IsometricMovement : MonoBehaviour {
 
 	public GameObject artifactBox;
 
-	float speed = 3.0f;
+	float speed = 1.5f;
 
 	void Start () {
 		
@@ -27,7 +27,7 @@ public class IsometricMovement : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D coll) {
-		if (coll.gameObject.tag == "Artifact" && Input.GetKey(KeyCode.Space)) {
+		if (coll.gameObject.tag == "Artifact" && Input.GetKey(KeyCode.F)) {
 			//pause the game
 			Time.timeScale = 0;
 			GameObject box = Instantiate (artifactBox);

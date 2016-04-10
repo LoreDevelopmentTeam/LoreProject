@@ -23,7 +23,7 @@ public class ArtifactBoxScript : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKey (KeyCode.Space)) {
+		if (Input.GetKey (KeyCode.F)) {
 			if (unpressed) {
 				Time.timeScale = 1;
 				Destroy (gameObject);
