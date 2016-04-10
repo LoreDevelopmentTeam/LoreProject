@@ -2,60 +2,49 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class MenuScript : MonoBehaviour {
 
-	public Canvas quitMenu; 
-	public Button startText; 
-	public Button exitText; 
 	public GameObject gameController; 
 
-	// Use this for initialization
 	void Start () {
-
-		quitMenu = quitMenu.GetComponent<Canvas> ();
-		startText = startText.GetComponent<Button> (); 
-		exitText = exitText.GetComponent<Button> (); 
-		quitMenu.enabled = false; 
-	
-	}
-
-	public void exitPress()
-	{
-
-		quitMenu.enabled = true; 
-		startText.enabled = false; 
-		exitText.enabled = false; 
-
-	}
-
-	public void NoPress() 
-
-	{
-
-		quitMenu.enabled = false; 
-		startText.enabled = true; 
-		exitText.enabled = true; 
-
-	}
-
-	public void startLevel()
-	{
-
 		if (GameController.instance == null) {
-			Instantiate (gameController); 
+			Instantiate (gameController);
 		}
-		SceneManager.LoadScene ("temple");
-
 	}
 
-	public void exitGame()
+	public void newPress()
 	{
-		Application.Quit();
+		SceneManager.LoadScene ("temple");
+		gameController.GetComponent<GameController>().getInstance().destroyedObjects = new List<string>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void continuePress()
+	{
+		if(File.Exists(Application.persistentDataPath + "/artifacts")) {
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(Application.persistentDataPath + "/artifacts", FileMode.Open);
+			gameController.GetComponent<GameController>().getInstance().destroyedObjects = (List<string>)bf.Deserialize(file);
+			file.Close();
+		}
+		if(File.Exists(Application.persistentDataPath + "/scene")) {
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(Application.persistentDataPath + "/scene", FileMode.Open);
+			string scene = (string)bf.Deserialize(file);
+			file.Close();
+			SceneManager.LoadScene (scene);
+		}
+	}
+
+	public void creditsPress() {
+		//play credits movie
+		print("credits");
+	}
+
+	public void exitPress() {
+		Application.Quit ();
 	}
 }

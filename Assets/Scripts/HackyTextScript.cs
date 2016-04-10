@@ -5,6 +5,6 @@ public class HackyTextScript : MonoBehaviour {
 
 	// Unity sucks
 	void Start () {
-		this.GetComponent<Renderer>().sortingLayerID = this.transform.parent.GetComponent<Renderer>().sortingLayerID;
+		this.GetComponent<Renderer>().sortingLayerName = "Foreground 2: Foregrounder";
 	}
 }

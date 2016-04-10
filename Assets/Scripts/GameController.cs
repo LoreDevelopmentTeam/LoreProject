@@ -2,14 +2,17 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class GameController : MonoBehaviour {
 
-	//public ArrayList destroyedObjects = new ArrayList(); 
-	public Dictionary<string, ArrayList> destroyedObjects = new Dictionary<string, ArrayList>();
-	public bool destroyed = false;  
+	public GameObject pauseMenu;
+	public List<string> destroyedObjects;
+	public static GameController instance = null;
 
-	public static GameController instance = null; 
+	bool unpressed = true;
+	GameObject p;
 
 	void Awake(){
 
@@ -24,27 +27,51 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int level){
-		string name = SceneManager.GetActiveScene ().name;
-		if (destroyedObjects.ContainsKey (name)) {
-			ArrayList objectsToRemove = destroyedObjects [name];
-			foreach (object obj in objectsToRemove) {
-				Destroy (GameObject.Find((string)obj));
+		foreach (string s in destroyedObjects) {
+			GameObject go = GameObject.Find (s);
+			if (go != null) {
+				Destroy (go);
 			}
 		}
 	}
 
-	// Use this for initialization
 	void Start () {
-
+		destroyedObjects = new List<string>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
+		foreach(string s in instance.destroyedObjects) {
+			print(s);
+		}
+		if (Input.GetKey (KeyCode.Escape) && !SceneManager.GetActiveScene ().name.Equals("Title")) {
+			if (unpressed) {
+				if (p == null) {
+					Time.timeScale = 0;
+					p = Instantiate (pauseMenu);
+				} else {
+					Destroy (p);
+					Time.timeScale = 1;
+				}
+			}
+			unpressed = false;
 
-		if(Input.GetKey(KeyCode.Escape))
-		{
-			Application.Quit ();
+		} else {
+			unpressed = true;
 		}
 	}
 
+	public void save() {
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create (Application.persistentDataPath + "/artifacts");
+		bf.Serialize(file, instance.destroyedObjects);
+		file.Close();
+		bf = new BinaryFormatter();
+		file = File.Create (Application.persistentDataPath + "/scene");
+		bf.Serialize(file, SceneManager.GetActiveScene ().name);
+		file.Close();
+	}
+
+	public GameController getInstance() {
+		return instance;
+	}
 }
