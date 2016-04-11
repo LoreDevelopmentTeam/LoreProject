@@ -7,7 +7,7 @@ public class IsometricMovement : MonoBehaviour {
 
 	public GameObject artifactBox;
 
-	float speed = 1.5f;
+	float speed = 6.5f;
 
 	void Start () {
 		

@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour {
 	public GameObject pauseMenu;
 	public List<string> destroyedObjects;
 	public static GameController instance = null;
-	public float playerX = -8;
-	public float playerY = -4;
+	public float playerX = -9.5f;
+	public float playerY = -4.5f;
 
 	bool unpressed = true;
 	GameObject p;
