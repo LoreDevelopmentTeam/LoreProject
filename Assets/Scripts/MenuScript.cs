@@ -18,7 +18,7 @@ public class MenuScript : MonoBehaviour {
 
 	public void newPress()
 	{
-		SceneManager.LoadScene ("temple");
+		SceneManager.LoadScene ("1Area_Entrance");
 		gameController.GetComponent<GameController>().getInstance().destroyedObjects = new List<string>();
 	}
 

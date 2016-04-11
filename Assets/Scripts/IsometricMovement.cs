@@ -22,6 +22,9 @@ public class IsometricMovement : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Teleporter") {
+			GameObject manager = GameObject.FindWithTag ("GameController");
+			manager.GetComponent<GameController> ().playerX = coll.gameObject.GetComponent<TeleporterScript> ().x;
+			manager.GetComponent<GameController> ().playerY = coll.gameObject.GetComponent<TeleporterScript> ().y;
 			SceneManager.LoadScene (coll.gameObject.GetComponent<TeleporterScript> ().scene);
 		}
 		else if (coll.gameObject.tag == "Artifact") {

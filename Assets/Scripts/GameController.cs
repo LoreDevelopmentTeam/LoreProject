@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour {
 	public GameObject pauseMenu;
 	public List<string> destroyedObjects;
 	public static GameController instance = null;
+	public float playerX = -8;
+	public float playerY = -4;
 
 	bool unpressed = true;
 	GameObject p;
@@ -27,6 +29,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int level){
+		GameObject player = GameObject.Find ("player");
+		player.transform.position = new Vector3 (playerX, playerY, 0);
+
 		foreach (string s in destroyedObjects) {
 			GameObject go = GameObject.Find (s);
 			if (go != null) {
