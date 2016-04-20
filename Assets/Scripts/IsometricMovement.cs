@@ -14,9 +14,14 @@ public class IsometricMovement : MonoBehaviour {
 	}
 
 	void Update () {
-		float h = Input.GetAxis ("Horizontal");
-		float v = Input.GetAxis ("Vertical");
-		transform.Translate (Vector2.up * speed * v * Time.deltaTime);
+		float h = Input.GetAxisRaw ("Horizontal");
+		float v = Input.GetAxisRaw ("Vertical");
+		if(h == 0) {
+			transform.Translate (Vector2.up * speed * v * Time.deltaTime);
+		}
+		else {
+			transform.Translate (Vector2.up * speed * v * Time.deltaTime * 0.5f);
+		}
 		transform.Translate (Vector2.right * speed * h * Time.deltaTime);
 	}
 
