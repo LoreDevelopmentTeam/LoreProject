@@ -8,23 +8,18 @@ using System.IO;
 
 public class MenuScript : MonoBehaviour {
 
-	public GameObject gameController; 
+	public GameObject gameController;
 	public MovieTexture credits;
 
-	void Start () {
-		if (GameController.instance == null) {
-			Instantiate (gameController);
-		}
-	}
-
-	public void newPress()
-	{
+	public void newPress() {
+		gameController.GetComponent<GameController> ().getInstance().start.Play ();
 		SceneManager.LoadScene ("1Area_Entrance");
 		gameController.GetComponent<GameController>().getInstance().destroyedObjects = new List<string>();
 	}
 
-	public void continuePress()
-	{
+	public void continuePress() {
+		gameController.GetComponent<GameController>().getInstance().click.Play ();
+
 		if(File.Exists(Application.persistentDataPath + "/artifacts")) {
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open(Application.persistentDataPath + "/artifacts", FileMode.Open);
@@ -41,6 +36,7 @@ public class MenuScript : MonoBehaviour {
 	}
 
 	public void creditsPress() {
+		gameController.GetComponent<GameController> ().getInstance().click.Play ();
 		credits.Stop ();
 		credits.Play ();
 	}

@@ -7,10 +7,5 @@ public class ArtifactScript : MonoBehaviour {
 	public string description;
 	public Sprite image;
 	public bool removeable = true;
-	public GameObject message;
-
-	public void setMessage(bool enabled) {
-		message.GetComponent<SpriteRenderer>().enabled = enabled;
-	}
-
+	public AudioClip tune;
 }

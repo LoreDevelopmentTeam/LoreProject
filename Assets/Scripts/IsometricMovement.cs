@@ -10,6 +10,8 @@ public class IsometricMovement : MonoBehaviour {
 	float speed = 1.5f;
 	int animTime;
 
+	public GameObject message;
+
 	public Sprite lu_stand;
 	public Sprite lu_walk1;
 	public Sprite lu_walk2;
@@ -31,18 +33,20 @@ public class IsometricMovement : MonoBehaviour {
 		animTime = 0;
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		float h = Input.GetAxisRaw ("Horizontal");
 		float v = Input.GetAxisRaw ("Vertical");
-		if(h == 0) {
+		if (h == 0) {
 			transform.Translate (Vector2.up * speed * v * Time.deltaTime);
-		}
-		else {
+		} else {
 			transform.Translate (Vector2.up * speed * v * Time.deltaTime * 0.5f);
 		}
 		transform.Translate (Vector2.right * speed * h * Time.deltaTime);
+	}
 
-
+	void Update () {
+		float h = Input.GetAxisRaw ("Horizontal");
+		float v = Input.GetAxisRaw ("Vertical");
 		//ANIMATION STUFF
 		bool moving = false;
 		if (h != 0) {
@@ -136,13 +140,13 @@ public class IsometricMovement : MonoBehaviour {
 			SceneManager.LoadScene (coll.gameObject.GetComponent<TeleporterScript> ().scene);
 		}
 		else if (coll.gameObject.tag == "Artifact") {
-			((ArtifactScript)coll.gameObject.GetComponent<ArtifactScript> ()).setMessage (true);
+			message.GetComponent<SpriteRenderer>().enabled = true;
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Artifact") {
-			((ArtifactScript)coll.gameObject.GetComponent<ArtifactScript> ()).setMessage (false);
+			message.GetComponent<SpriteRenderer>().enabled = false;
 		}
 	}
 
@@ -153,13 +157,33 @@ public class IsometricMovement : MonoBehaviour {
 			GameObject box = Instantiate (artifactBox);
 			box.transform.Find ("img").GetComponent<SpriteRenderer> ().sprite = coll.gameObject.GetComponent<ArtifactScript> ().image;
 			box.transform.Find ("name").GetComponent<TextMesh> ().text = coll.gameObject.GetComponent<ArtifactScript> ().artifactName;
-			box.transform.Find ("description").GetComponent<TextMesh> ().text = coll.gameObject.GetComponent<ArtifactScript> ().description;
+			setText(box.transform.Find ("description").GetComponent<TextMesh> (), coll.gameObject.GetComponent<ArtifactScript> ().description);
+
+			GameController manager = GameObject.FindWithTag ("GameController").GetComponent<GameController> ();
+			manager.artifactTune.clip = coll.gameObject.GetComponent<ArtifactScript> ().tune;
+			manager.artifactSfx.Play ();
+			manager.artifactTune.PlayDelayed (2.2f);
 			if (coll.gameObject.GetComponent<ArtifactScript> ().removeable) {
-				GameObject manager = GameObject.FindWithTag ("GameController");
-				manager.GetComponent<GameController> ().destroyedObjects.Add (coll.gameObject.name);
-				manager.GetComponent<GameController> ().save ();
+				manager.destroyedObjects.Add (coll.gameObject.GetComponent<ArtifactScript>().artifactName);
+				manager.save ();
 				Destroy (coll.gameObject);
+				message.GetComponent<SpriteRenderer>().enabled = false;
 			}
+		}
+	}
+
+	void setText(TextMesh tMesh, string text) {
+		//http://answers.unity3d.com/answers/778195/view.html
+		string builder = "";
+		tMesh.text = "";
+		float rowLimit = 9f;
+		string[] parts = text.Split(' ');
+		for (int i = 0; i < parts.Length; i++) {
+			tMesh.text += parts[i] + " ";
+			if (tMesh.GetComponent<Renderer>().bounds.extents.x > rowLimit) {
+				tMesh.text = builder.TrimEnd() + System.Environment.NewLine + parts[i] + " ";
+			}
+			builder = tMesh.text;
 		}
 	}
 }
