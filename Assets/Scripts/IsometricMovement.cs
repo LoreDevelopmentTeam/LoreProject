@@ -28,6 +28,7 @@ public class IsometricMovement : MonoBehaviour {
 	bool leftFacing = false;
 	bool upFacing = false;
 	bool step = true;
+	bool fUnpressed = true;
 
 	void Start () {
 		animTime = 0;
@@ -151,24 +152,29 @@ public class IsometricMovement : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D coll) {
-		if (coll.gameObject.tag == "Artifact" && Input.GetKey (KeyCode.F)) {
-			//pause the game
-			Time.timeScale = 0;
-			GameObject box = Instantiate (artifactBox);
-			box.transform.Find ("img").GetComponent<SpriteRenderer> ().sprite = coll.gameObject.GetComponent<ArtifactScript> ().image;
-			box.transform.Find ("name").GetComponent<TextMesh> ().text = coll.gameObject.GetComponent<ArtifactScript> ().artifactName;
-			setText(box.transform.Find ("description").GetComponent<TextMesh> (), coll.gameObject.GetComponent<ArtifactScript> ().description);
+		if (Input.GetKey (KeyCode.F)) {
+			if (coll.gameObject.tag == "Artifact" && fUnpressed) {
+				//pause the game
+				Time.timeScale = 0;
+				GameObject box = Instantiate (artifactBox);
+				box.transform.Find ("img").GetComponent<SpriteRenderer> ().sprite = coll.gameObject.GetComponent<ArtifactScript> ().image;
+				box.transform.Find ("name").GetComponent<TextMesh> ().text = coll.gameObject.GetComponent<ArtifactScript> ().artifactName;
+				setText (box.transform.Find ("description").GetComponent<TextMesh> (), coll.gameObject.GetComponent<ArtifactScript> ().description);
 
-			GameController manager = GameObject.FindWithTag ("GameController").GetComponent<GameController> ();
-			manager.artifactTune.clip = coll.gameObject.GetComponent<ArtifactScript> ().tune;
-			manager.artifactSfx.Play ();
-			manager.artifactTune.PlayDelayed (2.2f);
-			if (coll.gameObject.GetComponent<ArtifactScript> ().removeable) {
-				manager.destroyedObjects.Add (coll.gameObject.GetComponent<ArtifactScript>().artifactName);
-				manager.save ();
-				Destroy (coll.gameObject);
-				message.GetComponent<SpriteRenderer>().enabled = false;
+				GameController manager = GameObject.FindWithTag ("GameController").GetComponent<GameController> ();
+				manager.artifactTune.clip = coll.gameObject.GetComponent<ArtifactScript> ().tune;
+				manager.artifactSfx.Play ();
+				manager.artifactTune.PlayDelayed (2.2f);
+				if (coll.gameObject.GetComponent<ArtifactScript> ().removeable) {
+					manager.destroyedObjects.Add (coll.gameObject.GetComponent<ArtifactScript> ().artifactName);
+					manager.save ();
+					Destroy (coll.gameObject);
+					message.GetComponent<SpriteRenderer> ().enabled = false;
+				}
+				fUnpressed = false;
 			}
+		} else {
+			fUnpressed = true;
 		}
 	}
 

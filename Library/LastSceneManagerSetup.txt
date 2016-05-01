@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/0_Title.unity
+- path: Assets/Scenes/9Area_Font.unity
   isLoaded: 1
   isActive: 1

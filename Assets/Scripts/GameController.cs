@@ -27,9 +27,15 @@ public class GameController : MonoBehaviour {
 	public AudioSource artifactTune;
 
 	public AudioClip titleMusic;
-	public AudioClip templeMusic;
-	public AudioClip bazaarMusic;
-	public AudioClip fontMusic;
+	public AudioClip area1Music;
+	public AudioClip area2Music;
+	public AudioClip area3Music;
+	public AudioClip area4Music;
+	public AudioClip area5Music;
+	public AudioClip area6Music;
+	public AudioClip area7Music;
+	public AudioClip area8Music;
+	public AudioClip area9Music;
 
 	bool unpressed = true;
 	GameObject p;
@@ -86,29 +92,29 @@ public class GameController : MonoBehaviour {
 		if (name.Equals ("0_Title")) {
 			music = titleMusic;
 		} else if (name.Equals ("1Area_Entrance")) {
-			music = templeMusic;
+			music = area1Music;
 		} else if (name.Equals ("2aArea_TempleExterior")) {
-			music = templeMusic;
+			music = area2Music;
 		} else if (name.Equals ("2bArea_TempleInterior")) {
-			music = templeMusic;
+			music = area2Music;
 		} else if (name.Equals ("3Area_SlaveBazaar")) {
-			music = bazaarMusic;
+			music = area3Music;
 		} else if (name.Equals ("4Area_SlaveLiving")) {
-			music = bazaarMusic;
+			music = area4Music;
 		} else if (name.Equals ("5Area_SlaveTemple")) {
-			music = bazaarMusic;
+			music = area5Music;
 		} else if (name.Equals ("6Area_Vista")) {
-			//music = bazaarMusic;
+			music = area6Music;
 		} else if (name.Equals ("7aArea_Library")) {
-			//music = bazaarMusic;
+			music = area7Music;
 		} else if (name.Equals ("7bArea_Library")) {
-			//music = bazaarMusic;
+			music = area7Music;
 		} else if (name.Equals ("8aArea_PalaceExterior")) {
-			//music = bazaarMusic;
+			music = area8Music;
 		} else if (name.Equals ("8bArea_PalaceInterior")) {
-			//music = bazaarMusic;
+			music = area8Music;
 		} else if (name.Equals ("9Area_Font")) {
-			music = fontMusic;
+			music = area9Music;
 		}
 
 		if (musicSource != null && music != musicSource.clip) {
